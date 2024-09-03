@@ -15,6 +15,8 @@ def display_chat_interface():
         st.session_state.messages = []
     if "conversation_memory" not in st.session_state:
         st.session_state.conversation_memory = {}
+    if "last_audio" not in st.session_state:
+        st.session_state.last_audio = None
 
     # Sidebar for audio recording
     with st.sidebar:
@@ -22,7 +24,8 @@ def display_chat_interface():
         st.write("Enregistrez votre question:")
         wav_audio_data = st_audiorec()
 
-        if wav_audio_data is not None:
+        if wav_audio_data is not None and wav_audio_data != st.session_state.last_audio:
+            st.session_state.last_audio = wav_audio_data
             st.audio(wav_audio_data, format='audio/wav')
             st.success("Audio enregistré avec succès!")
 
@@ -32,11 +35,11 @@ def display_chat_interface():
             with open('audio/recorded_audio.wav', 'wb') as f:
                 f.write(wav_audio_data)
 
-            if st.button("Traiter l'audio"):
-                with st.spinner("Transcription de l'audio..."):
-                    text = transcribe_audio_stream(wav_audio_data)
-                st.session_state.messages.append(format_message("user", text))
-                st.rerun()
+            # Automatically process the audio
+            with st.spinner("Transcription de l'audio..."):
+                text = transcribe_audio_stream(wav_audio_data)
+            st.session_state.messages.append(format_message("user", text))
+            st.rerun()
 
     # Main chat interface
     chat_tab, text_input_tab = st.tabs(["Conversation", "Saisie Texte"])
