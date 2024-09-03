@@ -18,8 +18,20 @@ def display_chat_interface():
     if "last_audio" not in st.session_state:
         st.session_state.last_audio = None
 
-    # Sidebar for audio recording
+    # Sidebar for explanation and audio recording
     with st.sidebar:
+        st.header("Comment ça marche ?")
+        st.markdown("""
+        1. **Enregistrement de la question vocale** qui déclenche une transcription IA automatique.
+        2. **Envoi de la question** vers un LLM avec du prompt engineering basique pour répondre aux questions dans le contexte.
+        3. **Génération de la réponse vocale** avec une IA de text to speech.
+        4. Et on recommence autant que nécessaire !
+
+        **Limites de la démo :**
+        - Pas de streaming en temps réel.
+        - Voix qui manquent un peu de personnalité :)
+        """)
+
         st.header("Enregistrement Audio")
         st.write("Enregistrez votre question:")
         wav_audio_data = st_audiorec()
