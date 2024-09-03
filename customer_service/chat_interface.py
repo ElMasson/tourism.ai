@@ -57,7 +57,7 @@ def display_chat_interface():
         if st.button("Envoyer"):
             if text_input:
                 st.session_state.messages.append(format_message("user", text_input))
-                st.experimental_rerun()
+                st.rerun()
 
     # Add a button to end the conversation
     if st.button("Terminer la conversation"):
@@ -81,9 +81,9 @@ def process_and_respond(input_text):
         audio_data = generate_speech_stream(full_response)
 
         if audio_data:
-            st.write("Audio généré avec succès. Lecture en cours...")
-            st.audio(audio_data, format="audio/mp3")
-            st.success("Audio généré et sauvegardé avec succès !")
+            st.write("Audio généré avec succès. Lecture automatique...")
+            st.audio(audio_data, format="audio/mp3", autoplay=True)
+            st.success("Audio généré et lu avec succès !")
         else:
             st.warning("Aucune donnée audio n'a été générée.")
     except Exception as e:
