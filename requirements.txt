@@ -1,0 +1,10 @@
+streamlit
+openai
+python-dotenv
+elevenlabs
+streamlit-audiorecorder
+streamlit-webrtc
+SpeechRecognition
+pydub
+requests
+streamlit-audiorec
